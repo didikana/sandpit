@@ -1,9 +1,14 @@
 # Run untrusted Python safely with a full audit trace.
 
+![tests](https://github.com/didikana/sandpit/actions/workflows/tests.yml/badge.svg)
+
 sandpit runs Python code under a trace layer so you can inspect what it did:
 functions called, files opened, modules imported, and policy-relevant behavior.
 It is built for reviewing LLM-generated Python before you trust it in a larger
 workflow.
+
+## Install
+pip install sandpit
 
 ```python
 import sandpit
@@ -71,10 +76,12 @@ This writes `script.sptrace` as JSON Lines: one event per line.
 - sandpit is not a full VM — for untrusted code from genuinely hostile 
   sources, combine with OS-level isolation (no airgap)
 
-## Status
-
-Phase 2 adds TOML policies and Python-layer enforcement for imports, files,
-network calls, and process creation. On macOS, seccomp is unavailable, so
-sandpit enforces at the Python hook layer only. On Linux, optional seccomp
-hardening can be enabled when a compatible `seccomp` or `pyseccomp` binding is
-installed. Replay/diff are planned but not implemented yet.
+## Roadmap
+- [x] Execution tracing (sys.settrace + sys.setprofile)
+- [x] .sptrace format (JSON Lines)
+- [x] Python API (run, run_string, violations, save)
+- [x] TOML policy enforcement (imports, fs, network, process)
+- [ ] seccomp BPF hardening (Linux)
+- [ ] Replay engine
+- [ ] Trace diff
+- [ ] pytest-sandpit plugin
