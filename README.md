@@ -1,4 +1,4 @@
-# Run untrusted Python safely — with a full audit trace.
+# Run untrusted Python safely with a full audit trace.
 
 sandpit runs Python code under a trace layer so you can inspect what it did:
 functions called, files opened, modules imported, and policy-relevant behavior.
@@ -69,7 +69,7 @@ This writes `script.sptrace` as JSON Lines: one event per line.
 - Windows is not supported for syscall enforcement
 - The trace layer adds ~2-5ms overhead per run
 - sandpit is not a full VM — for untrusted code from genuinely hostile 
-  sources, combine with OS-level isolation
+  sources, combine with OS-level isolation (no airgap)
 
 ## Status
 
