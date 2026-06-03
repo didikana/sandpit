@@ -1,1 +1,6 @@
 AGENTS5.md
+dist/
+sandpit.egg-info/
+__pycache__/
+*.pyc
+AGENTS.md
