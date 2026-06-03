@@ -24,7 +24,22 @@ result.save("llm-run.sptrace")
 The `no-network` policy blocks the network-related import or socket operation,
 reports the violated rule in `result.violations`, and preserves the full
 execution trace for audit.
+## How it works
 
+sandpit enforces at two layers:
+
+**Python layer** (`sys.settrace` + `sys.setprofile` + import hooks)
+Intercepts every function call, file open, and import at the Python level.
+Zero instrumentation required on the traced script. This is the trace layer —
+it observes and enforces import denials and socket calls before they reach the OS.
+
+**Syscall layer** (Linux only: `seccomp`)
+Hard OS-level caps on file access and process creation. Even if a script
+bypasses Python-level hooks via a C extension, seccomp catches it at the
+kernel boundary.
+
+macOS uses Python-layer enforcement only — seccomp is Linux-specific.
+The trace layer works identically on both platforms.
 ## Python API
 
 ```python
@@ -46,6 +61,15 @@ sandpit run script.py
 ```
 
 This writes `script.sptrace` as JSON Lines: one event per line.
+
+## Limitations
+
+- C extensions that bypass the Python interpreter are not traced at the 
+  Python layer (seccomp handles these on Linux)
+- Windows is not supported for syscall enforcement
+- The trace layer adds ~2-5ms overhead per run
+- sandpit is not a full VM — for untrusted code from genuinely hostile 
+  sources, combine with OS-level isolation
 
 ## Status
 
