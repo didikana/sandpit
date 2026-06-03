@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sandpit"
+version = "0.1.0"
+description = "A deterministic Python sandbox with execution traces."
+requires-python = ">=3.9"
+
+[project.scripts]
+sandpit = "sandpit.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sandpit*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
