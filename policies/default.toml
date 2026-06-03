@@ -1,0 +1,16 @@
+[fs]
+allow_read  = ["/usr", "/lib", "/tmp", "{cwd}"]
+allow_write = ["/tmp", "{cwd}/output"]
+deny_read   = ["/etc/passwd", "/etc/shadow", "{home}/.ssh"]
+
+[network]
+allow = false
+
+[process]
+allow_fork  = false
+allow_exec  = false
+max_cpu_ms  = 5000
+max_mem_mb  = 256
+
+[imports]
+deny = ["subprocess", "ctypes", "socket"]

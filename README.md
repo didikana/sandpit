@@ -21,8 +21,8 @@ print(result.violations)
 result.save("llm-run.sptrace")
 ```
 
-The `no-network` policy is observation-only for now: sandpit reports the
-network-related import and call as policy violations while preserving the full
+The `no-network` policy blocks the network-related import or socket operation,
+reports the violated rule in `result.violations`, and preserves the full
 execution trace for audit.
 
 ## Python API
@@ -49,5 +49,8 @@ This writes `script.sptrace` as JSON Lines: one event per line.
 
 ## Status
 
-Phase 1 is the trace layer and programmatic API. Policy enforcement,
-replay/diff, and syscall-level isolation are planned but not implemented yet.
+Phase 2 adds TOML policies and Python-layer enforcement for imports, files,
+network calls, and process creation. On macOS, seccomp is unavailable, so
+sandpit enforces at the Python hook layer only. On Linux, optional seccomp
+hardening can be enabled when a compatible `seccomp` or `pyseccomp` binding is
+installed. Replay/diff are planned but not implemented yet.

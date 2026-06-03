@@ -14,5 +14,12 @@ sandpit = "sandpit.cli:main"
 [tool.setuptools.packages.find]
 include = ["sandpit*"]
 
+[tool.setuptools.data-files]
+"policies" = [
+  "policies/default.toml",
+  "policies/no-network.toml",
+  "policies/read-only.toml",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
