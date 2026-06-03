@@ -8,6 +8,9 @@ version = "0.2.0"
 description = "A deterministic Python sandbox with execution traces."
 requires-python = ">=3.9"
 
+[project.optional-dependencies]
+dev = ["pytest"]
+
 [project.scripts]
 sandpit = "sandpit.cli:main"
 
